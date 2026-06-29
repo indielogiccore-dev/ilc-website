@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Indie logic core</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#f9f9fc",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed-variant": "#454749",
+                      "surface-container-low": "#f3f3f6",
+                      "on-primary-container": "#6b6d70",
+                      "on-secondary-fixed": "#121c2c",
+                      "on-primary": "#ffffff",
+                      "surface-container-high": "#e8e8eb",
+                      "on-surface": "#1a1c1e",
+                      "on-primary-fixed": "#1a1c1e",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#bcc7dd",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed": "#e2e2e5",
+                      "surface": "#f9f9fc",
+                      "secondary-container": "#d6e0f6",
+                      "tertiary-container": "#ebf0ff",
+                      "on-secondary-fixed-variant": "#3d4759",
+                      "tertiary": "#545f72",
+                      "outline": "#75777a",
+                      "secondary": "#555f71",
+                      "on-background": "#1a1c1e",
+                      "error-container": "#ffdad6",
+                      "inverse-surface": "#2f3133",
+                      "surface-tint": "#5d5e61",
+                      "on-tertiary-container": "#626d81",
+                      "surface-container-lowest": "#ffffff",
+                      "outline-variant": "#c5c6ca",
+                      "inverse-primary": "#c6c6c9",
+                      "secondary-fixed": "#d9e3f9",
+                      "inverse-on-surface": "#f0f0f3",
+                      "surface-container-highest": "#e2e2e5",
+                      "primary": "#5d5e61",
+                      "surface-dim": "#d9dadd",
+                      "primary-container": "#f0f0f3",
+                      "on-secondary-container": "#596376",
+                      "surface-container": "#edeef1",
+                      "secondary-fixed-dim": "#bdc7dc",
+                      "on-error": "#ffffff",
+                      "tertiary-fixed": "#d8e3fa",
+                      "on-error-container": "#93000a",
+                      "background": "#f9f9fc",
+                      "on-tertiary-fixed-variant": "#3c475a",
+                      "on-surface-variant": "#45474a",
+                      "surface-variant": "#e2e2e5",
+                      "primary-fixed-dim": "#c6c6c9",
+                      "on-tertiary-fixed": "#111c2c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "margin-mobile": "16px",
+                      "lg": "40px",
+                      "margin-desktop": "48px",
+                      "base": "8px",
+                      "xl": "64px",
+                      "sm": "12px",
+                      "md": "24px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "body-md": ["Sora"],
+                      "display-lg": ["Sora"],
+                      "label-sm": ["Sora"],
+                      "body-lg": ["Sora"],
+                      "label-lg": ["Sora"],
+                      "headline-md": ["Sora"],
+                      "headline-lg": ["Sora"],
+                      "headline-lg-mobile": ["Sora"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-lg": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neumorphic-raised {
+            box-shadow: -6px -6px 12px rgba(255, 255, 255, 0.7), 6px 6px 12px rgba(163, 177, 198, 0.5);
+        }
+        .neumorphic-inset {
+            box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.7), inset 4px 4px 8px rgba(163, 177, 198, 0.5);
+        }
+        .neumorphic-button-active:active {
+            box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.7), inset 4px 4px 8px rgba(163, 177, 198, 0.5);
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="bg-primary-container text-on-surface font-body-md min-h-screen flex flex-col selection:bg-secondary-container">
+<!-- TopNavBar -->
+<nav class="sticky top-gutter flex justify-between items-center w-[90%] z-50 bg-primary-container text-primary font-label-lg rounded-full mt-md mx-auto max-w-7xl px-sm py-xs shadow-[-6px_-6px_12px_rgba(255,255,255,0.7),6px_6px_12px_rgba(163,177,198,0.5)]">
+<div class="font-headline-md text-on-surface pl-md">Indie logic core</div>
+<div class="hidden md:flex gap-base">
+<a class="text-primary font-bold shadow-[inset_-4px_-4px_8px_rgba(255,255,255,0.7),inset_4px_4px_8px_rgba(163,177,198,0.5)] px-4 py-2 rounded-full hover:scale-[1.02] transition-transform duration-300" href="#">Engine</a>
+<a class="text-on-surface-variant px-4 py-2 hover:scale-[1.02] transition-transform duration-300" href="#">Architectures</a>
+<a class="text-on-surface-variant px-4 py-2 hover:scale-[1.02] transition-transform duration-300" href="#">Case Studies</a>
+<a class="text-on-surface-variant px-4 py-2 hover:scale-[1.02] transition-transform duration-300" href="#">Contact</a>
+</div>
+<button class="bg-primary-container text-on-surface font-label-lg px-md py-sm rounded-full neumorphic-raised neumorphic-button-active transition-all duration-300 hover:scale-[1.02]">
+            Initialize Project
+        </button>
+</nav>
+<main class="flex-grow w-full">
+<!-- Hero Section -->
+<section class="flex flex-col items-center justify-center min-h-[716px] px-md max-w-5xl mx-auto text-center mt-xl">
+<h1 class="font-display-lg text-on-surface tracking-tight mb-md">We compile raw logic into <br class="hidden md:block"/> digital infrastructure.</h1>
+<p class="font-body-lg text-on-surface-variant max-w-2xl mb-xl">
+                Engineering intelligent agents, native mobile ecosystems, and full-stack web architectures with a focus on tactile, physical-feeling digital interactions.
+            </p>
+<div class="flex items-center gap-sm w-full max-w-md bg-primary-container p-xs rounded-full neumorphic-inset">
+<input class="flex-grow bg-transparent border-none outline-none px-md text-on-surface font-body-md placeholder:text-outline focus:ring-0" placeholder="Initiate a project brief..." type="text"/>
+<button aria-label="Submit Brief" class="w-12 h-12 flex items-center justify-center rounded-full bg-primary-container text-primary neumorphic-raised neumorphic-button-active transition-all">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Core Logic Stack -->
+<section class="max-w-7xl mx-auto px-md py-xl mt-lg">
+<h2 class="font-headline-lg text-on-surface text-center mb-xl">The Core Logic Stack</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+<!-- Card 1 -->
+<div class="bg-primary-container rounded-[24px] p-lg neumorphic-raised flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full neumorphic-inset flex items-center justify-center mb-md text-primary">
+<span class="material-symbols-outlined text-[32px]">memory</span>
+</div>
+<h3 class="font-headline-md text-on-surface mb-sm">Intelligent Agents &amp; RAG</h3>
+<p class="font-body-md text-on-surface-variant">Autonomous AI workflows integrated seamlessly into enterprise data pipelines.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-primary-container rounded-[24px] p-lg neumorphic-raised flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full neumorphic-inset flex items-center justify-center mb-md text-primary">
+<span class="material-symbols-outlined text-[32px]">smartphone</span>
+</div>
+<h3 class="font-headline-md text-on-surface mb-sm">Native Mobile Engineering</h3>
+<p class="font-body-md text-on-surface-variant">High-performance, tactile UI applications compiled for iOS and Android environments.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-primary-container rounded-[24px] p-lg neumorphic-raised flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full neumorphic-inset flex items-center justify-center mb-md text-primary">
+<span class="material-symbols-outlined text-[32px]">cloud</span>
+</div>
+<h3 class="font-headline-md text-on-surface mb-sm">Full-Stack Web Architecture</h3>
+<p class="font-body-md text-on-surface-variant">Scalable, distributed cloud systems prioritizing zero-latency data synchronization.</p>
+</div>
+</div>
+</section>
+<!-- Featured Implementations -->
+<section class="max-w-7xl mx-auto px-md py-xl mt-lg">
+<h2 class="font-headline-lg text-on-surface mb-xl">Featured Implementations</h2>
+<div class="flex flex-col gap-xl">
+<!-- Case Study 1 -->
+<div class="bg-primary-container rounded-[24px] p-md md:p-lg neumorphic-raised flex flex-col md:flex-row gap-lg items-center">
+<div class="w-full md:w-1/2 aspect-video rounded-[16px] neumorphic-inset overflow-hidden relative">
+<img class="w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="A highly detailed, ultra-modern dashboard interface for an AI evaluation tool displayed on a sleek monitor. The UI features soft neumorphic shadows, a light grayish-white theme, and precise, minimalist data visualization charts. The surrounding workspace is clean, bathed in soft, diffused natural daylight, emphasizing a professional, high-tech engineering aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeHQZW2x2XN7_H2hpP8pEd4HX9L4XQvmHQmokyj-tO_Nxd2Sp99weoUFJSlCLR1OVc5mnmopEI9h-WZSXsvhD2Mb5B5-5J-f9sh9Sps3i2cpvolVojOAEfBd1vC1lihlXVjUDSPv82NRfrc3ka0DDNsiH5tHT-THann5j0RoLs5uraO_4nUQdajy3u0Hshog5rOOYrEJC8iwTgDH2UDRV-XyqaWuG8DrajUEcZFXNtVLquuvyssvl0zBr8p27J5hd7WDUEufmRng"/>
+</div>
+<div class="w-full md:w-1/2 flex flex-col gap-md">
+<h3 class="font-headline-lg text-on-surface">EnderEval AI</h3>
+<p class="font-body-md text-on-surface-variant">A comprehensive diagnostic suite for large language models, utilizing localized vector similarity searches and automated reasoning audits.</p>
+<div class="flex flex-wrap gap-sm mt-sm">
+<span class="neumorphic-inset rounded-full px-4 py-1 text-label-sm text-primary">Vite</span>
+<span class="neumorphic-inset rounded-full px-4 py-1 text-label-sm text-primary">Vector DB</span>
+<span class="neumorphic-inset rounded-full px-4 py-1 text-label-sm text-primary">Python</span>
+</div>
+</div>
+</div>
+<!-- Case Study 2 -->
+<div class="bg-primary-container rounded-[24px] p-md md:p-lg neumorphic-raised flex flex-col md:flex-row-reverse gap-lg items-center">
+<div class="w-full md:w-1/2 aspect-video rounded-[16px] neumorphic-inset overflow-hidden relative">
+<img class="w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="A premium smartphone displaying a sophisticated fitness coaching application. The app interface uses soft, extruded neumorphic UI components in a light mode palette, tracking biometric data and workout routines. The phone rests on a smooth, matte white desk beside modern wireless earbuds, illuminated by soft, structural lighting to highlight depth and physical interaction." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi0WGhwgXgV4LpOlPYdosYFLaEq_v6gZmfMQurlQqxoVBAw8E4vKvlNSUDUNCzcy4d9Ojj-AHxOlVHPR_RHto0G9MN13E5Cec_RflKgMtsBz5V0Q4md4Uijl3I6A1OAqwNx5EFPvrJHlix2Igy_8SpG-q9sA8Uf8HkGRplt9w0S2foKF-pR0SJmL0Edlo-O58YDiDM02zs4k3UKtAT7jzKdVIAxNhVl5Tus23aeOdAJHCoQ7TFTPSwDfwYOtWVdrRGsyfZsmr_fw"/>
+</div>
+<div class="w-full md:w-1/2 flex flex-col gap-md">
+<h3 class="font-headline-lg text-on-surface">MetaHuman Instructor</h3>
+<p class="font-body-md text-on-surface-variant">An adaptive mobile platform delivering personalized kinematics feedback through localized edge-computing and computer vision.</p>
+<div class="flex flex-wrap gap-sm mt-sm">
+<span class="neumorphic-inset rounded-full px-4 py-1 text-label-sm text-primary">React Native</span>
+<span class="neumorphic-inset rounded-full px-4 py-1 text-label-sm text-primary">CoreML</span>
+</div>
+</div>
+</div>
+<!-- Case Study 3 -->
+<div class="bg-primary-container rounded-[24px] p-md md:p-lg neumorphic-raised flex flex-col md:flex-row gap-lg items-center">
+<div class="w-full md:w-1/2 aspect-video rounded-[16px] neumorphic-inset overflow-hidden relative">
+<img class="w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="A collaborative financial web application interface viewed on a modern laptop screen. The design is strictly soft UI, featuring pill-shaped buttons, inset text fields, and raised cards on a warm white background. The scene suggests productivity and clarity, with subtle depth cues indicating interactive elements, set in a bright, contemporary office environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaHq4D0wCsNJR0mtTNpFTh6MLkL3QvaXSuOIBAtfPxpdK-dH21KmhqEltDssBJ_REefzKqYgqreqavwZtkN-VlloydljFjTm5Kh2f7VSBlt0jClmDOgOsg6wEaTo33WgxVun62CHzRt96WrXMkYynagN_3PHzhjeamGYqMka24dJ50eJA8c2g4YJUpRhseL--svGdd159qClmMPxEHquYHehuaNaeVgYJOTlMMbwReLnqLsi9ZCLVG6ly-XygqYBVjmDzhsdiNtQ"/>
+</div>
+<div class="w-full md:w-1/2 flex flex-col gap-md">
+<h3 class="font-headline-lg text-on-surface">Unified Expense Splitter</h3>
+<p class="font-body-md text-on-surface-variant">A synchronized financial ledger designed for seamless group transactions, prioritizing tactile input interactions and offline-first reliability.</p>
+<div class="flex flex-wrap gap-sm mt-sm">
+<span class="neumorphic-inset rounded-full px-4 py-1 text-label-sm text-primary">Next.js</span>
+<span class="neumorphic-inset rounded-full px-4 py-1 text-label-sm text-primary">PostgreSQL</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer / Contact Portal -->
+<footer class="w-full mt-xl rounded-t-[40px] p-lg bg-primary-container shadow-[inset_-4px_-4px_8px_rgba(255,255,255,0.7),inset_4px_4px_8px_rgba(163,177,198,0.5)] flex flex-col items-center gap-md">
+<div class="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-xl py-xl border-b border-surface-variant mb-lg">
+<!-- Contact Form -->
+<div class="flex flex-col gap-md">
+<h3 class="font-headline-lg text-on-surface mb-sm">Initiate Communication</h3>
+<div class="flex flex-col gap-md">
+<div class="neumorphic-inset rounded-full px-md py-sm bg-primary-container">
+<input class="w-full bg-transparent border-none outline-none text-on-surface font-body-md placeholder:text-outline focus:ring-0" placeholder="System Administrator Email" type="email"/>
+</div>
+<div class="neumorphic-inset rounded-[24px] px-md py-sm bg-primary-container min-h-[120px]">
+<textarea class="w-full h-full bg-transparent border-none outline-none text-on-surface font-body-md placeholder:text-outline focus:ring-0 resize-none" placeholder="Define Project Scope..."></textarea>
+</div>
+<button class="self-start mt-sm bg-primary-container text-primary font-label-lg px-xl py-md rounded-full neumorphic-raised neumorphic-button-active transition-all duration-300">
+                        Transmit Data
+                    </button>
+</div>
+</div>
+<!-- Info & Socials -->
+<div class="flex flex-col gap-lg justify-center md:pl-xl">
+<div>
+<h4 class="font-label-sm text-outline mb-xs uppercase tracking-widest">Base of Operations</h4>
+<p class="font-headline-md text-on-surface flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<span data-location="Jaipur, RJ">Jaipur, RJ</span>
+</p>
+</div>
+<div>
+<h4 class="font-label-sm text-outline mb-md uppercase tracking-widest">Global Network</h4>
+<div class="flex gap-md">
+<a aria-label="LinkedIn" class="w-12 h-12 flex items-center justify-center rounded-full bg-primary-container text-on-surface neumorphic-raised neumorphic-button-active transition-all" href="#">
+<span class="material-symbols-outlined">work</span>
+</a>
+<a aria-label="Twitter" class="w-12 h-12 flex items-center justify-center rounded-full bg-primary-container text-on-surface neumorphic-raised neumorphic-button-active transition-all" href="#">
+<span class="material-symbols-outlined">chat</span>
+</a>
+<a aria-label="GitHub" class="w-12 h-12 flex items-center justify-center rounded-full bg-primary-container text-on-surface neumorphic-raised neumorphic-button-active transition-all" href="#">
+<span class="material-symbols-outlined">code</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- JSON Footer Links -->
+<div class="w-full max-w-7xl flex flex-col md:flex-row justify-between items-center gap-md font-body-md text-on-surface-variant">
+<div class="font-headline-md text-on-surface">Indie logic core</div>
+<div class="flex gap-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors focus-within:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.7),inset_2px_2px_4px_rgba(163,177,198,0.5)] px-2 rounded" href="#">Privacy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors focus-within:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.7),inset_2px_2px_4px_rgba(163,177,198,0.5)] px-2 rounded" href="#">Terms</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors focus-within:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.7),inset_2px_2px_4px_rgba(163,177,198,0.5)] px-2 rounded" href="#">Security</a>
+</div>
+<div class="text-sm">© 2024 Indie logic core. All protocols initiated.</div>
+</div>
+</footer>
+</body></html>

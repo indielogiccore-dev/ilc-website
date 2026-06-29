@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Indie Logic Core builds AI agents, mobile systems, and full-stack web infrastructure with tactile soft UI design.">
+  <title>Indie Logic Core</title>
+  <link rel="icon" type="image/jpeg" href="logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --surface: #f0f0f3;
+      --surface-bright: #f9f9fc;
+      --surface-high: #e8e8eb;
+      --surface-pressed: #e2e2e5;
+      --text: #1a1c1e;
+      --muted: #45474a;
+      --quiet: #75777a;
+      --primary: #4f596b;
+      --secondary: #d6e0f6;
+      --tertiary: #d8e3fa;
+      --success: #60776b;
+      --warm: #a9785d;
+      --raised: -6px -6px 12px rgba(255, 255, 255, 0.72), 6px 6px 12px rgba(163, 177, 198, 0.5);
+      --raised-strong: -9px -9px 18px rgba(255, 255, 255, 0.78), 9px 9px 18px rgba(163, 177, 198, 0.52);
+      --inset: inset -4px -4px 8px rgba(255, 255, 255, 0.72), inset 4px 4px 8px rgba(163, 177, 198, 0.5);
+      --content: 1180px;
+      --space-1: 8px;
+      --space-2: 12px;
+      --space-3: 24px;
+      --space-4: 40px;
+      --space-5: 64px;
+      --radius-card: 24px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--surface);
+      color: var(--text);
+      font-family: "Sora", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .site-shell {
+      overflow: hidden;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 24px;
+      z-index: 20;
+      width: min(calc(100% - 32px), var(--content));
+      margin: 24px auto 0;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--surface);
+      border-radius: var(--radius-pill);
+      box-shadow: var(--raised);
+    }
+
+    .brand {
+      min-width: max-content;
+      padding: 8px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 42%;
+      box-shadow: var(--inset);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      transition: box-shadow 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible,
+    .nav-links a.active {
+      color: var(--primary);
+      box-shadow: var(--inset);
+      outline: 0;
+    }
+
+    .button {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 0;
+      border-radius: var(--radius-pill);
+      background: var(--surface);
+      color: var(--primary);
+      box-shadow: var(--raised);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 22px;
+      transition: box-shadow 180ms ease, transform 180ms ease;
+      white-space: nowrap;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      box-shadow: var(--raised-strong);
+      outline: 0;
+      transform: translateY(-1px);
+    }
+
+    .button:active {
+      box-shadow: var(--inset);
+      transform: translateY(0);
+    }
+
+    .button .arrow {
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-shadow: var(--inset);
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .section {
+      width: min(calc(100% - 32px), var(--content));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: calc(100vh - 160px);
+      padding: 112px 0 56px;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .hero-inner {
+      width: min(100%, 780px);
+      display: grid;
+      justify-items: center;
+      gap: 24px;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .hero-logo {
+      width: 132px;
+      height: 132px;
+      padding: 8px;
+      border-radius: 36px;
+      background: var(--surface);
+      box-shadow: var(--raised);
+    }
+
+    .hero-logo img {
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      object-fit: cover;
+      object-position: 50% 41%;
+      box-shadow: var(--inset);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 0;
+      max-width: 720px;
+      font-size: 52px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 680px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .brief-form {
+      width: min(100%, 540px);
+      min-height: 64px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      background: var(--surface);
+      border-radius: var(--radius-pill);
+      box-shadow: var(--inset);
+    }
+
+    .brief-form input {
+      min-width: 0;
+      height: 46px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      padding: 0 18px;
+    }
+
+    .brief-form input::placeholder,
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: var(--quiet);
+    }
+
+    .brief-form .button {
+      width: 48px;
+      height: 48px;
+      min-height: 48px;
+      padding: 0;
+    }
+
+    .signal-strip {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .signal-strip span {
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--inset);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 0;
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .section-heading p {
+      max-width: 520px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .stack {
+      padding: 48px 0 80px;
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .service-card,
+    .case-card,
+    .step-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--raised);
+    }
+
+    .service-card {
+      min-height: 268px;
+      padding: 36px 28px;
+      display: grid;
+      align-content: start;
+      justify-items: start;
+      gap: 18px;
+    }
+
+    .icon-well {
+      width: 58px;
+      height: 58px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-shadow: var(--inset);
+      color: var(--primary);
+    }
+
+    .icon-well svg {
+      width: 26px;
+      height: 26px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .service-card h3,
+    .case-copy h3,
+    .step-card h3 {
+      margin-bottom: 0;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .service-card p,
+    .case-copy p,
+    .step-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .work {
+      padding: 64px 0 88px;
+    }
+
+    .case-list {
+      display: grid;
+      gap: 40px;
+    }
+
+    .case-card {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.96fr) minmax(280px, 1fr);
+      gap: 40px;
+      align-items: center;
+      padding: 36px;
+    }
+
+    .case-card:nth-child(even) {
+      grid-template-columns: minmax(280px, 1fr) minmax(280px, 0.96fr);
+    }
+
+    .case-card:nth-child(even) .media {
+      order: 2;
+    }
+
+    .media {
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      border-radius: 18px;
+      background: var(--surface-high);
+      box-shadow: var(--inset);
+    }
+
+    .media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.74) contrast(0.96);
+    }
+
+    .case-copy {
+      display: grid;
+      gap: 18px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: var(--inset);
+    }
+
+    .method {
+      padding: 64px 0 96px;
+    }
+
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .step-card {
+      padding: 30px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .step-number {
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--inset);
+    }
+
+    .contact {
+      margin-top: 16px;
+      border-radius: 40px 40px 0 0;
+      box-shadow: var(--inset);
+    }
+
+    .contact-inner {
+      width: min(calc(100% - 32px), var(--content));
+      margin: 0 auto;
+      padding: 72px 0 28px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.9fr) minmax(280px, 1fr);
+      gap: 72px;
+      align-items: center;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(117, 119, 122, 0.2);
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .contact-form h2 {
+      margin-bottom: 4px;
+      font-size: 30px;
+      line-height: 1.2;
+    }
+
+    .field {
+      display: block;
+      border-radius: var(--radius-card);
+      box-shadow: var(--inset);
+      background: var(--surface);
+      padding: 5px;
+    }
+
+    .field.pill {
+      border-radius: var(--radius-pill);
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      padding: 14px 18px;
+      resize: vertical;
+    }
+
+    .field textarea {
+      min-height: 138px;
+    }
+
+    .contact-panel {
+      display: grid;
+      gap: 30px;
+      color: var(--muted);
+    }
+
+    .detail-block {
+      display: grid;
+      gap: 8px;
+    }
+
+    .detail-label {
+      color: var(--quiet);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .detail-value {
+      color: var(--text);
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .socials {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .socials a {
+      width: 48px;
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: var(--primary);
+      box-shadow: var(--raised);
+      font-weight: 700;
+      transition: box-shadow 180ms ease, transform 180ms ease;
+    }
+
+    .socials a:hover,
+    .socials a:focus-visible {
+      box-shadow: var(--inset);
+      outline: 0;
+      transform: translateY(1px);
+    }
+
+    .footer-row {
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover,
+    .footer-links a:focus-visible {
+      color: var(--primary);
+      outline: 0;
+    }
+
+    @media (max-width: 900px) {
+      .topbar {
+        align-items: stretch;
+        border-radius: 28px;
+        flex-direction: column;
+      }
+
+      .brand {
+        text-align: center;
+        justify-content: center;
+      }
+
+      .nav-links {
+        width: 100%;
+      }
+
+      .topbar > .button {
+        width: 100%;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 76px 0 48px;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .stack-grid,
+      .step-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .case-card,
+      .case-card:nth-child(even) {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .case-card:nth-child(even) .media {
+        order: 0;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        font-size: 15px;
+      }
+
+      .topbar {
+        top: 12px;
+        width: min(calc(100% - 24px), var(--content));
+        margin-top: 12px;
+      }
+
+      .nav-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nav-links a {
+        padding: 8px 10px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .hero-copy {
+        font-size: 16px;
+      }
+
+      .brief-form {
+        grid-template-columns: 1fr;
+        border-radius: 28px;
+        padding: 10px;
+      }
+
+      .brief-form .button {
+        width: 100%;
+      }
+
+      .section-heading h2,
+      .contact-form h2 {
+        font-size: 26px;
+      }
+
+      .service-card,
+      .case-card,
+      .step-card {
+        padding: 24px;
+      }
+
+      .contact {
+        border-radius: 28px 28px 0 0;
+      }
+
+      .footer-row {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Indie Logic Core home">
+        <img class="brand-logo" src="logo.jpg" alt="" aria-hidden="true">
+        <span>Indie Logic Core</span>
+      </a>
+      <nav class="nav-links" aria-label="Main menu">
+        <a class="active" href="#engine">Engine</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#work">Case Studies</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="button" href="#contact">Initialize Project</a>
+    </header>
+
+    <main id="top">
+      <section class="hero section" aria-labelledby="hero-title">
+        <div class="hero-inner">
+          <div class="hero-logo" aria-hidden="true">
+            <img src="logo.jpg" alt="">
+          </div>
+          <p class="eyebrow">Soft UI systems for serious builds</p>
+          <h1 id="hero-title">Indie Logic Core</h1>
+          <p class="hero-copy">
+            We compile raw logic into digital infrastructure: AI agents, native mobile ecosystems,
+            and full-stack web architecture with calm, physical-feeling interactions.
+          </p>
+          <form class="brief-form" action="#contact" aria-label="Start a project brief">
+            <input type="text" name="brief" placeholder="Initiate a project brief..." aria-label="Project brief">
+            <button class="button" type="submit" aria-label="Submit project brief">
+              <span class="arrow" aria-hidden="true">&gt;</span>
+            </button>
+          </form>
+          <div class="signal-strip" aria-label="Project capabilities">
+            <span>Agent workflows</span>
+            <span>Mobile systems</span>
+            <span>Cloud web platforms</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="stack section" id="engine" aria-labelledby="stack-title">
+        <div class="section-heading">
+          <h2 id="stack-title">The Core Logic Stack</h2>
+          <p>
+            Purpose-built engineering tracks for teams that need intelligent products to feel
+            precise, responsive, and production-ready from the first interaction.
+          </p>
+        </div>
+
+        <div class="stack-grid">
+          <article class="service-card">
+            <span class="icon-well" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+                <path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"></path>
+              </svg>
+            </span>
+            <h3>Intelligent Agents and RAG</h3>
+            <p>Autonomous AI workflows connected to enterprise data, evaluation loops, and operator controls.</p>
+          </article>
+
+          <article class="service-card">
+            <span class="icon-well" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="7" y="2" width="10" height="20" rx="2"></rect>
+                <path d="M10 18h4M10 5h4"></path>
+              </svg>
+            </span>
+            <h3>Native Mobile Engineering</h3>
+            <p>High-performance tactile interfaces for iOS and Android, tuned for edge data and real-world input.</p>
+          </article>
+
+          <article class="service-card" id="architecture">
+            <span class="icon-well" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M17.5 18H8a5 5 0 1 1 1.2-9.86A6 6 0 0 1 20 11.5 3.25 3.25 0 0 1 17.5 18Z"></path>
+              </svg>
+            </span>
+            <h3>Full-Stack Web Architecture</h3>
+            <p>Distributed web systems with synchronized data, durable APIs, and low-friction admin experiences.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="work section" id="work" aria-labelledby="work-title">
+        <div class="section-heading">
+          <h2 id="work-title">Featured Implementations</h2>
+          <p>
+            Reference builds that show how the system language scales from AI evaluation tools to
+            financial collaboration products.
+          </p>
+        </div>
+
+        <div class="case-list">
+          <article class="case-card">
+            <div class="media">
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeHQZW2x2XN7_H2hpP8pEd4HX9L4XQvmHQmokyj-tO_Nxd2Sp99weoUFJSlCLR1OVc5mnmopEI9h-WZSXsvhD2Mb5B5-5J-f9sh9Sps3i2cpvolVojOAEfBd1vC1lihlXVjUDSPv82NRfrc3ka0DDNsiH5tHT-THann5j0RoLs5uraO_4nUQdajy3u0Hshog5rOOYrEJC8iwTgDH2UDRV-XyqaWuG8DrajUEcZFXNtVLquuvyssvl0zBr8p27J5hd7WDUEufmRng"
+                alt="AI evaluation dashboard displayed on a modern desktop monitor"
+              >
+            </div>
+            <div class="case-copy">
+              <h3>EnderEval AI</h3>
+              <p>A diagnostic suite for large language models using localized vector similarity, reasoning audits, and regression checks.</p>
+              <div class="tags" aria-label="EnderEval AI technologies">
+                <span class="tag">Vite</span>
+                <span class="tag">Vector DB</span>
+                <span class="tag">Python</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <div class="media">
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi0WGhwgXgV4LpOlPYdosYFLaEq_v6gZmfMQurlQqxoVBAw8E4vKvlNSUDUNCzcy4d9Ojj-AHxOlVHPR_RHto0G9MN13E5Cec_RflKgMtsBz5V0Q4md4Uijl3I6A1OAqwNx5EFPvrJHlix2Igy_8SpG-q9sA8Uf8HkGRplt9w0S2foKF-pR0SJmL0Edlo-O58YDiDM02zs4k3UKtAT7jzKdVIAxNhVl5Tus23aeOdAJHCoQ7TFTPSwDfwYOtWVdrRGsyfZsmr_fw"
+                alt="Mobile coaching application shown on a smartphone beside earbuds"
+                loading="lazy"
+              >
+            </div>
+            <div class="case-copy">
+              <h3>MetaHuman Instructor</h3>
+              <p>An adaptive mobile platform delivering kinematics feedback through localized edge compute and computer vision.</p>
+              <div class="tags" aria-label="MetaHuman Instructor technologies">
+                <span class="tag">React Native</span>
+                <span class="tag">CoreML</span>
+                <span class="tag">Vision</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <div class="media">
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaHq4D0wCsNJR0mtTNpFTh6MLkL3QvaXSuOIBAtfPxpdK-dH21KmhqEltDssBJ_REefzKqYgqreqavwZtkN-VlloydljFjTm5Kh2f7VSBlt0jClmDOgOsg6wEaTo33WgxVun62CHzRt96WrXMkYynagN_3PHzhjeamGYqMka24dJ50eJA8c2g4YJUpRhseL--svGdd159qClmMPxEHquYHehuaNaeVgYJOTlMMbwReLnqLsi9ZCLVG6ly-XygqYBVjmDzhsdiNtQ"
+                alt="Collaborative finance web application displayed on a laptop"
+                loading="lazy"
+              >
+            </div>
+            <div class="case-copy">
+              <h3>Unified Expense Splitter</h3>
+              <p>A synchronized ledger for group transactions, with tactile input paths and offline-first reliability.</p>
+              <div class="tags" aria-label="Unified Expense Splitter technologies">
+                <span class="tag">Next.js</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">Sync API</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="method section" aria-labelledby="method-title">
+        <div class="section-heading">
+          <h2 id="method-title">Operating Pattern</h2>
+          <p>
+            The workflow keeps product logic, interface behavior, and system architecture moving
+            together instead of handing them off as separate tracks.
+          </p>
+        </div>
+
+        <div class="step-grid">
+          <article class="step-card">
+            <span class="step-number">01</span>
+            <h3>Model the logic</h3>
+            <p>Map the workflow, data contracts, and decision points before choosing implementation details.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">02</span>
+            <h3>Shape the interface</h3>
+            <p>Turn the Tactile Core design system into clear affordances for inputs, status, and review loops.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">03</span>
+            <h3>Harden the system</h3>
+            <p>Ship with observability, validation, and iteration paths for production teams.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="contact" id="contact">
+      <div class="contact-inner">
+        <div class="contact-grid">
+          <div class="contact-form">
+            <p class="eyebrow">Initiate communication</p>
+            <h2>Transmit a project brief</h2>
+            <label class="field pill">
+              <span class="sr-only">Name</span>
+              <input type="text" id="wa-name" placeholder="Your name" required>
+            </label>
+            <label class="field">
+              <span class="sr-only">Project scope</span>
+              <textarea id="wa-scope" placeholder="Define project scope..." required></textarea>
+            </label>
+            <button class="button" type="button" onclick="sendToWhatsApp()">Transmit Data</button>
+          </div>
+          <script>
+            function sendToWhatsApp() {
+              const name = document.getElementById('wa-name').value.trim();
+              const scope = document.getElementById('wa-scope').value.trim();
+              if (!name || !scope) {
+                alert('Please fill in your name and project scope.');
+                return;
+              }
+              const message = `Hi, I'm ${name}.\n\nProject Brief:\n${scope}`;
+              const phone = '919999999999'; // Replace with your WhatsApp number (country code + number, no + or spaces)
+              window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(message));
+            }
+          </script>
+
+          <div class="contact-panel" aria-label="Contact details">
+            <div class="detail-block">
+              <span class="detail-label">Base of Operations</span>
+              <span class="detail-value">Jaipur, RJ</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Global Network</span>
+              <div class="socials">
+                <a href="#" aria-label="LinkedIn">in</a>
+                <a href="#" aria-label="Messages">m</a>
+                <a href="#" aria-label="Code repository">&lt;/&gt;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-row">
+          <strong>Indie Logic Core</strong>
+          <nav class="footer-links" aria-label="Footer links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Security</a>
+          </nav>
+          <span>&copy; 2026 Indie Logic Core. All protocols initiated.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
